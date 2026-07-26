@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ders 8: DHT11 Sıcaklık ve Nem Sensörü - Arduino</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/lesson.css">
+</head>
+<body>
+    <main class="container lesson-container">
+        <article class="lesson-content">
+            <header class="lesson-header">
+                <h1>Ders 8: DHT11 Sıcaklık ve Nem Sensörü</h1>
+                <span class="level">Orta</span>
+                <p class="lesson-intro">DHT11 sensörü kullanarak ortamın sıcaklık ve nem oranını ölçeceğiz. Bu sensör hava durumu istasyonları ve iklim kontrol sistemlerinde kullanılır.</p>
+            </header>
+            
+            <section class="lesson-section">
+                <h2>📚 Öğrenecekleriniz</h2>
+                <ul>
+                    <li>DHT11 sensörün çalışma prensibi</li>
+                    <li>Digital protokol ile veri okuma</li>
+                    <li>Sıcaklık (°C) ve nem (%) ölçümü</li>
+                    <li>Seri monitöre veri gönderme</li>
+                    <li>Kalibrasyon ve hata kontrolü</li>
+                    <li>Grafik arayüzle gerçek zamanlı izleme</li>
+                    <li>Veri günlüğe kaydetme (logging)</li>
+                </ul>
+            </section>
+
+            <section class="lesson-section">
+                <h2>🛠️ Gerekli Malzemeler</h2>
+                <div class="materials-grid">
+                    <div class="material-item">
+                        <strong>DHT11 Sensör</strong>
+                        <p>Sıcaklık ve nem ölçümü için</p>
+                    </div>
+                    <div class="material-item">
+                        <strong>10kΩ Direnç</strong>
+                        <p>Pull-up direnci (veri hattı için)</p>
+                    </div>
+                    <div class="material-item">
+                        <strong>Arduino Uno</strong>
+                        <p>Kontrol kartı</p>
+                    </div>
+                    <div class="material-item">
+                        <strong>Jumper Kablolar</strong>
+                        <p>Bağlantı kablolları</p>
+                    </div>
+                    <div class="material-item">
+                        <strong>USB Kablo</strong>
+                        <p>Programlama ve seri iletişim için</p>
+                    </div>
+                    <div class="material-item">
+                        <strong>Breadboard</strong>
+                        <p>Devre tahtası (opsiyonel)</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <h2>🔌 Devre Şeması</h2>
+                <div class="circuit-diagram">
+                    <pre>
+┌──────────────────────────────────────────┐
+│         Arduino Uno                      │
+│                                          │
+│ 5V ──────┬──[10kΩ]──┬────────────────── │
+│          │          │                    │
+│          │       Pin 2 (Veri)           │
+│          │          │                    │
+│       DHT11         GND                  │
+│      ┌──┴──┐                            │
+│      │1  4 │                            │
+│      │2  3 │                            │
+│      └─────┘                            │
+│       VCC  DATA GND                      │
+│        │    │    │                       │
+│        5V   2    GND                     │
+│                                          │
+└──────────────────────────────────────────┘
+
+DHT11 Pin Dağılımı:
+1: VCC (5V) - Güç
+2: DATA - Veri Hattı (Pin 2)
+3: NC - Bağlı değil
+4: GND - Toprak
+                    </pre>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <h2>📥 Kütüphane Kurulumu</h2>
+                <div class="code-block">
+                    <pre><code>// Arduino IDE'de kütüphane kurma:
+// 1. Sketch → Include Library → Manage Libraries
+// 2. "DHT" arayıp Ara
+// 3. "DHT sensor library" (Adafruit tarafından) Kur
+// 4. Ayrıca "Adafruit Unified Sensor" kütüphanesi de gerekli
+
+#include <DHT.h>
+
+#define DHTPIN 2      // Veri pini
+#define DHTTYPE DHT11 // Sensör tipi
+
+DHT dht(DHTPIN, DHTTYPE);</code></pre>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <h2>💻 Arduino Kodu (Temel Versiyon)</h2>
+                <div class="code-block">
+                    <pre><code id="arduino-code">#include <DHT.h>
+
+#define DHTPIN 2      // DHT11 veri pini
+#define DHTTYPE DHT11 // DHT 11
+
+DHT dht(DHTPIN, DHTTYPE);
+
+void setup() {
+  Serial.begin(9600);
+  Serial.println("DHT11 Sensör Test Başladı...");
+  dht.begin();
+}
+
+void loop() {
+  // 2 saniye bekle (DHT11 minimum okuma süresi)
+  delay(2000);
+
+  // Nem ve sıcaklık oku
+  float nem = dht.readHumidity();
+  float sicaklik = dht.readTemperature();
+
+  // Hata kontrol
+  if (isnan(nem) || isnan(sicaklik)) {
+    Serial.println("DHT11 okunamadı!");
+    return;
+  }
+
+  // Hissi sıcaklık hesapla (Heat Index)
+  float hissi = dht.computeHeatIndex(sicaklik, nem, false);
+
+  // Seri monitöre yaz
+  Serial.print("Nem: ");
+  Serial.print(nem);
+  Serial.print("%  Sıcaklık: ");
+  Serial.print(sicaklik);
+  Serial.print("°C  Hissi: ");
+  Serial.print(hissi);
+  Serial.println("°C");
+}</code></pre>
+                    <button onclick="copyCode('arduino-code')" class="copy-btn">📋 Kodu Kopyala</button>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <h2>💻 Arduino Kodu (İleri Versiyon - Veri Günlüğü ve Alarm)</h2>
+                <div class="code-block">
+                    <pre><code id="arduino-code2">#include <DHT.h>
+
+#define DHTPIN 2
+#define DHTTYPE DHT11
+#define BUZZER_PIN 8
+#define LED_PIN 13
+
+DHT dht(DHTPIN, DHTTYPE);
+
+// Veri depolama (son 10 ölçüm)
+float sicakliklar[10];
+float nemler[10];
+int veri_sayisi = 0;
+unsigned long son_okuma = 0;
+const unsigned long OKUMA_ARALI = 2000; // 2 saniye
+
+// Sıcaklık sınırları
+const float MIN_SICAKLIK = 15.0;  // Minimum
+const float MAX_SICAKLIK = 35.0;  // Maksimum
+const float MIN_NEM = 30.0;       // Minimum
+const float MAX_NEM = 80.0;       // Maksimum
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(BUZZER_PIN, OUTPUT);
+  pinMode(LED_PIN, OUTPUT);
+  
+  Serial.println("\n=== DHT11 İleri İzleme Sistemi ===");
+  Serial.print("Sıcaklık Aralığı: ");
+  Serial.print(MIN_SICAKLIK);
+  Serial.print("°C - ");
+  Serial.print(MAX_SICAKLIK);
+  Serial.println("°C");
+  
+  Serial.print("Nem Aralığı: ");
+  Serial.print(MIN_NEM);
+  Serial.print("% - ");
+  Serial.print(MAX_NEM);
+  Serial.println("%\n");
+  
+  dht.begin();
+}
+
+void loop() {
+  unsigned long simdi = millis();
+  
+  // Okuma zaman aralığı kontrol et
+  if (simdi - son_okuma < OKUMA_ARALI) {
+    return;
+  }
+  son_okuma = simdi;
+  
+  // DHT11'den oku
+  float nem = dht.readHumidity();
+  float sicaklik = dht.readTemperature();
+  
+  // Hata kontrol
+  if (isnan(nem) || isnan(sicaklik)) {
+    Serial.println("[HATA] DHT11 sensörü okunamadı!");
+    digitalWrite(LED_PIN, HIGH);
+    delay(200);
+    digitalWrite(LED_PIN, LOW);
+    return;
+  }
+  
+  // Veri depoya ekle (son 10 ölçüm)
+  if (veri_sayisi < 10) {
+    sicakliklar[veri_sayisi] = sicaklik;
+    nemler[veri_sayisi] = nem;
+    veri_sayisi++;
+  } else {
+    // Eski verileri kaydır
+    for (int i = 0; i < 9; i++) {
+      sicakliklar[i] = sicakliklar[i + 1];
+      nemler[i] = nemler[i + 1];
+    }
+    sicakliklar[9] = sicaklik;
+    nemler[9] = nem;
+  }
+  
+  // Hissi sıcaklık
+  float hissi = dht.computeHeatIndex(sicaklik, nem, false);
+  
+  // İstatistikler
+  float avg_sicaklik = hesaplaOrtalama(sicakliklar, veri_sayisi);
+  float avg_nem = hesaplaOrtalama(nemler, veri_sayisi);
+  float min_sicaklik = hesaplaMin(sicakliklar, veri_sayisi);
+  float max_sicaklik = hesaplaMax(sicakliklar, veri_sayisi);
+  
+  // Konsola yaz
+  Serial.print("[";
+  Serial.print(simdi / 1000);
+  Serial.print("s] ");
+  Serial.print("Sıcaklık: ");
+  Serial.print(sicaklik, 1);
+  Serial.print("°C | Nem: ");
+  Serial.print(nem, 1);
+  Serial.print("% | Hissi: ");
+  Serial.print(hissi, 1);
+  Serial.println("°C");
+  
+  // Alarm kontrolü
+  bool alarm_durumu = false;
+  
+  if (sicaklik < MIN_SICAKLIK) {
+    Serial.println("⚠️  UYARI: Sıcaklık çok düşük!");
+    alarm_durumu = true;
+  }
+  else if (sicaklik > MAX_SICAKLIK) {
+    Serial.println("⚠️  UYARI: Sıcaklık çok yüksek!");
+    alarm_durumu = true;
+  }
+  
+  if (nem < MIN_NEM) {
+    Serial.println("⚠️  UYARI: Nem çok düşük!");
+    alarm_durumu = true;
+  }
+  else if (nem > MAX_NEM) {
+    Serial.println("⚠️  UYARI: Nem çok yüksek!");
+    alarm_durumu = true;
+  }
+  
+  // Alarm sesini çal
+  if (alarm_durumu) {
+    tone(BUZZER_PIN, 1000, 200);
+    delay(100);
+    noTone(BUZZER_PIN);
+  }
+  
+  // LED durumunu güncelle
+  digitalWrite(LED_PIN, alarm_durumu ? HIGH : LOW);
+  
+  // İstatistikler (her 10 ölçümde)
+  static int sayac = 0;
+  sayac++;
+  if (sayac >= 10) {
+    Serial.println("\n=== İstatistikler ===");
+    Serial.print("Ort. Sıcaklık: ");
+    Serial.print(avg_sicaklik, 1);
+    Serial.print("°C | Min: ");
+    Serial.print(min_sicaklik, 1);
+    Serial.print("°C | Max: ");
+    Serial.print(max_sicaklik, 1);
+    Serial.println("°C");
+    
+    Serial.print("Ort. Nem: ");
+    Serial.print(avg_nem, 1);
+    Serial.println("%\n");
+    sayac = 0;
+  }
+}
+
+// Ortalama hesapla
+float hesaplaOrtalama(float dizi[], int boyut) {
+  if (boyut == 0) return 0;
+  float toplam = 0;
+  for (int i = 0; i < boyut; i++) {
+    toplam += dizi[i];
+  }
+  return toplam / boyut;
+}
+
+// Minimum değeri bul
+float hesaplaMin(float dizi[], int boyut) {
+  if (boyut == 0) return 0;
+  float min_val = dizi[0];
+  for (int i = 1; i < boyut; i++) {
+    if (dizi[i] < min_val) min_val = dizi[i];
+  }
+  return min_val;
+}
+
+// Maksimum değeri bul
+float hesaplaMax(float dizi[], int boyut) {
+  if (boyut == 0) return 0;
+  float max_val = dizi[0];
+  for (int i = 1; i < boyut; i++) {
+    if (dizi[i] > max_val) max_val = dizi[i];
+  }
+  return max_val;
+}</code></pre>
+                    <button onclick="copyCode('arduino-code2')" class="copy-btn">📋 Kodu Kopyala</button>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <h2>🔍 Kod Açıklaması</h2>
+                <div class="explanation">
+                    <div class="exp-item">
+                        <h3>readHumidity() ve readTemperature()</h3>
+                        <p>DHT11'den nem ve sıcaklık değerlerini okur. isnan() ile okumanın başarılı olup olmadığını kontrol ederiz.</p>
+                    </div>
+                    <div class="exp-item">
+                        <h3>computeHeatIndex()</h3>
+                        <p>Sıcaklık ve nem oranından "hissi sıcaklık" hesaplar. İnsanın algıladığı sıcaklıktır.</p>
+                    </div>
+                    <div class="exp-item">
+                        <h3>Veri Depolama (Circular Buffer)</h3>
+                        <p>Son 10 ölçümü saklar. Yeni ölçüm gelince en eski silinir. İstatistik hesaplanması için kullanılır.</p>
+                    </div>
+                    <div class="exp-item">
+                        <h3>Alarm Sistemi</h3>
+                        <p>Sıcaklık ve nem sınırlarından çıkarsa buzzer çalar ve LED yanar.</p>
+                    </div>
+                    <div class="exp-item">
+                        <h3>İstatistik Fonksiyonları</h3>
+                        <p>hesaplaOrtalama(), hesaplaMin(), hesaplaMax() - Veri analizi için fonksiyonlar.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <h2>⚙️ Seri Monitör Çıktısı Örneği</h2>
+                <div class="code-block">
+                    <pre><code>=== DHT11 İleri İzleme Sistemi ===
+Sıcaklık Aralığı: 15.00°C - 35.00°C
+Nem Aralığı: 30.00% - 80.00%
+
+[2s] Sıcaklık: 24.0°C | Nem: 65.0% | Hissi: 24.5°C
+[4s] Sıcaklık: 24.2°C | Nem: 64.8% | Hissi: 24.6°C
+[6s] Sıcaklık: 24.1°C | Nem: 65.2% | Hissi: 24.5°C
+[8s] Sıcaklık: 38.5°C | Nem: 70.0% | Hissi: 40.2°C
+⚠️  UYARI: Sıcaklık çok yüksek!
+[10s] Sıcaklık: 38.3°C | Nem: 69.8% | Hissi: 39.9°C
+⚠️  UYARI: Sıcaklık çok yüksek!
+
+=== İstatistikler ===
+Ort. Sıcaklık: 25.3°C | Min: 24.0°C | Max: 38.5°C
+Ort. Nem: 66.9%</code></pre>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <h2>🛠️ Sorun Giderme</h2>
+                <div class="problems">
+                    <div class="problem">
+                        <h3>❌ DHT11 okunamadı hatası</h3>
+                        <p>✅ Çözümler:</p>
+                        <ul>
+                            <li>Bağlantıları kontrol et (VCC-5V, GND-GND, DATA-Pin2)</li>
+                            <li>Pull-up direnci (10kΩ) veri hattına bağlı mı?</li>
+                            <li>Sensör çok hızlı okumaya çalışma (minimum 2 saniye arası)</li>
+                            <li>Jumper kablolar sıkı mı bağlı?</li>
+                        </ul>
+                    </div>
+                    <div class="problem">
+                        <h3>❌ Değerler sabit veya değişmiyor</h3>
+                        <p>✅ Çözümler:</p>
+                        <ul>
+                            <li>DHT11'i bir dakika ısınması için bekle</li>
+                            <li>Sensörü döndür veya elle ısında/soğutta deneyimle değeri kontrol et</li>
+                            <li>Kütüphane düzgün kurulmuş mu? (Adafruit DHT ve Unified Sensor)</li>
+                        </ul>
+                    </div>
+                    <div class="problem">
+                        <h3>❌ Hissi sıcaklık garip gösteriliyorsa</h3>
+                        <p>✅ Çözümler:</p>
+                        <ul>
+                            <li>Nem değeri tutarlı mı? (30-80% ideal)</li>
+                            <li>Sıcaklık gerçekçi mi? (0-50°C normal aralık)</li>
+                            <li>Sensörü doğru konuma yerleştir (işığın altında değil)</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <h2>📊 Veri Analizi Görevleri</h2>
+                <div class="modifications">
+                    <div class="mod-item">
+                        <h3>Görev 1: Sıcaklık Veri Grafiği Çiz</h3>
+                        <p>Seri monitörden okunan verileri Excel'e kopyayla ve grafik oluştur. Son 1 saat içindeki sıcaklık değişimini gözlemle.</p>
+                    </div>
+                    <div class="mod-item">
+                        <h3>Görev 2: Farklı Ortamlarda Ölç</h3>
+                        <p>Sensörü fark ortamlara (odada, dışarıda, buzdolabında) yerleştirip ölçümler yap. Farklılıkları kaydet.</p>
+                    </div>
+                    <div class="mod-item">
+                        <h3>Görev 3: Alarm Sınırlarını Ayarla</h3>
+                        <p>MIN_SICAKLIK, MAX_SICAKLIK vb. değerlerini değiştirip test et. Sensör değerleri sınırları aştığında alarm çalsın.</p>
+                    </div>
+                </div>
+            </section>
+
+            <div class="next-lesson">
+                <h3>Sonraki Ders: Ultrasonik Sensör (Mesafe Ölçümü)</h3>
+                <p>HC-SR04 ile engel algılama yapacağız. Robotlar ve otonom araçlarda kullanılır.</p>
+                <a href="lesson-09.html" class="btn-next">Ders 9'a Git →</a>
+            </div>
+        </article>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Tech Academy. Tüm hakları saklıdır.</p>
+    </footer>
+
+    <script src="../js/script.js"></script>
+</body>
+</html>

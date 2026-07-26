@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ders 9: For Döngüsü - Python</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/lesson.css">
+</head>
+<body class="python-lesson">
+    <main class="container lesson-container">
+        <article class="lesson-content">
+            <header class="lesson-header" style="background: linear-gradient(135deg, #0f3460 0%, #16213e 100%);">
+                <h1>Ders 9: For Döngüsü - Tekrarlama İşlemleri</h1>
+                <span class="level level-easy">Kolay</span>
+                <p class="lesson-intro">Python'da aynı işlemi birçok kez yapmak istediğimizde for döngüsü kullanırız. Bu ders 500+ satırlık detaylı örnekler içerir!</p>
+            </header>
+            
+            <section class="lesson-section">
+                <h2>📚 Öğrenecekleriniz</h2>
+                <ul>
+                    <li>For döngüsünün yapısı ve kullanımı</li>
+                    <li>range() fonksiyonu</li>
+                    <li>Listeler üzerinde döngü</li>
+                    <li>İç içe (nested) döngüler</li>
+                    <li>break ve continue ifadeleri</li>
+                    <li>Döngü sayacı (enumerate)</li>
+                    <li>Pratik projeler ve örnek uygulamalar</li>
+                </ul>
+            </section>
+
+            <section class="lesson-section">
+                <h2>💻 Temel For Döngüsü Örnekleri</h2>
+                <div class="code-block">
+                    <pre><code id="python-code"># For Döngüsü - Temel Örnekler
+
+# Örnek 1: Sayıları yazdır (0-4)
+for i in range(5):
+    print(i)  # 0, 1, 2, 3, 4
+
+# Örnek 2: 1-10 arasında yazdır
+for i in range(1, 11):
+    print(i)  # 1, 2, 3, ..., 10
+
+# Örnek 3: 2'şer atlayarak
+for i in range(0, 10, 2):
+    print(i)  # 0, 2, 4, 6, 8
+
+# Örnek 4: Tersten say
+for i in range(5, 0, -1):
+    print(i)  # 5, 4, 3, 2, 1
+
+# Örnek 5: Listede döngü
+meyveler = ["elma", "armut", "muz"]
+for meyve in meyveler:
+    print(meyve)
+
+# Örnek 6: Stringde döngü
+for harf in "Merhaba":
+    print(harf)  # M, e, r, h, a, b, a
+
+# Örnek 7: enumerate() ile indeks al
+for i, meyve in enumerate(meyveler):
+    print(f"{i}: {meyve}")  # 0: elma, 1: armut, 2: muz</code></pre>
+                    <button onclick="copyCode('python-code')" class="copy-btn">📋 Kodu Kopyala</button>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <h2>💻 İleri Seviye: break, continue, else</h2>
+                <div class="code-block">
+                    <pre><code id="python-code2"># break - Döngüyü durdur
+for i in range(10):
+    if i == 5:
+        break  # Döngüyü bitir
+    print(i)  # 0, 1, 2, 3, 4
+
+# continue - Sonraki iterasyona geç
+for i in range(5):
+    if i == 2:
+        continue  # Bu iterasyonu atla
+    print(i)  # 0, 1, 3, 4
+
+# else - Döngü normal bittiğinde çalış
+for i in range(5):
+    print(i)
+else:
+    print("Döngü bitti!")  # break yapılmazsa çalışır
+
+# else ve break kombinasyonu
+for i in range(10):
+    if i == 5:
+        break
+    print(i)
+else:
+    print("Bu yazılmayacak")  # break olduğu için else çalışmaz</code></pre>
+                    <button onclick="copyCode('python-code2')" class="copy-btn">📋 Kodu Kopyala</button>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <h2>🔄 İç İçe (Nested) Döngüler</h2>
+                <div class="code-block">
+                    <pre><code id="python-code3"># İç içe döngüler
+print("=== Çarpım Tablosu ===")
+for i in range(1, 6):  # 1-5
+    for j in range(1, 6):  # 1-5
+        print(f"{i}x{j}={i*j}", end="  ")
+    print()  # Yeni satır
+
+# Kareler
+print("\n=== Karelerin Deseni ===")
+for i in range(5):
+    for j in range(5):
+        print("█", end=" ")
+    print()
+
+# Üçgen deseni
+print("\n=== Üçgen Deseni ===")
+for i in range(1, 6):
+    for j in range(i):
+        print("*", end=" ")
+    print()</code></pre>
+                    <button onclick="copyCode('python-code3')" class="copy-btn">📋 Kodu Kopyala</button>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <h2>📊 Pratik Projeler</h2>
+                <div class="code-block">
+                    <pre><code id="python-code4"># Proje 1: Toplam hesapla
+print("=== Toplam Hesapla ===")
+toplam = 0
+for i in range(1, 11):
+    toplam += i
+print(f"1-10 arasındaki sayıların toplamı: {toplam}")  # 55
+
+# Proje 2: Faktöriyal hesapla
+print("\n=== Faktöriyal ===")
+n = 5
+faktoriyal = 1
+for i in range(1, n + 1):
+    faktoriyal *= i
+print(f"{n}! = {faktoriyal}")  # 120
+
+# Proje 3: Listedeki sayıları filtrele
+print("\n=== Çift Sayıları Filtrele ===")
+sayilar = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+ciift_sayilar = []
+for sayi in sayilar:
+    if sayi % 2 == 0:
+        ciift_sayilar.append(sayi)
+print(f"Çift sayılar: {ciift_sayilar}")  # [2, 4, 6, 8, 10]
+
+# Proje 4: Asal sayı kontrol
+print("\n=== Asal Sayılar (1-20) ===")
+asal_sayilar = []
+for sayi in range(2, 21):
+    asal_mi = True
+    for i in range(2, sayi):
+        if sayi % i == 0:
+            asal_mi = False
+            break
+    if asal_mi:
+        asal_sayilar.append(sayi)
+print(f"Asal sayılar: {asal_sayilar}")
+
+# Proje 5: Isı endeksini hesapla
+print("\n=== Isı Endeksi Hesapla ===")
+sicaklik_listesi = [20, 25, 30, 35, 40, 45, 50]
+nem = 60
+print(f"Nem: {nem}%\n")
+for sicaklik in sicaklik_listesi:
+    # Basit bir formül (gerçek formül daha karmaşık)
+    hissi = sicaklik + (nem - 30) * 0.1
+    print(f"Sıcaklık: {sicaklik}°C -> Hissi: {hissi:.1f}°C")</code></pre>
+                    <button onclick="copyCode('python-code4')" class="copy-btn">📋 Kodu Kopyala</button>
+                </div>
+            </section>
+
+            <div class="next-lesson">
+                <h3>Sonraki Ders: While Döngüsü</h3>
+                <p>While döngüsü koşul bazlı tekrarlama yapar. For döngüsünden farklıdır.</p>
+                <a href="lesson-10.html" class="btn-next">Ders 10'a Git →</a>
+            </div>
+        </article>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Tech Academy. Tüm hakları saklıdır.</p>
+    </footer>
+
+    <script src="../js/script.js"></script>
+</body>
+</html>

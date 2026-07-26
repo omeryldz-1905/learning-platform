@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ders 7: If/Elif/Else - Python</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/lesson.css">
+</head>
+<body class="python-lesson">
+    <main class="container lesson-container">
+        <article class="lesson-content">
+            <header class="lesson-header" style="background: linear-gradient(135deg, #0f3460 0%, #16213e 100%);">
+                <h1>Ders 7: If/Elif/Else Koşullu İfadeler</h1>
+                <span class="level level-easy">Kolay</span>
+                <p class="lesson-intro">Koşullara göre farklı işlemler yapabiliriz. Karar ağaçları oluşturabiliriz!</p>
+            </header>
+            <section class="lesson-section">
+                <h2>📚 Öğrenecekleriniz</h2>
+                <ul>
+                    <li>if ifadesi (eğer)</li>
+                    <li>elif ifadesi (eğer değilse)</li>
+                    <li>else ifadesi (yoksa)</li>
+                    <li>İç içe koşullar</li>
+                    <li>Karmaşık karar ağaçları</li>
+                </ul>
+            </section>
+            <section class="lesson-section">
+                <h2>💻 Örnekler</h2>
+                <div class="code-block">
+                    <pre><code id="python-code"># If/Elif/Else
+
+# Basit if
+yas = 20
+
+if yas >= 18:
+    print("Reşitsiniz")
+
+# if/else
+if yas >= 18:
+    print("Reşitsiniz")
+else:
+    print("Henüz reşit değilsiniz")
+
+# if/elif/else
+not = 85
+
+if not >= 90:
+    print("A - Çok İyi")
+elif not >= 80:
+    print("B - İyi")
+elif not >= 70:
+    print("C - Yeterli")
+elif not >= 60:
+    print("D - Zayıf")
+else:
+    print("F - Başarısız")
+
+# İç içe if
+hava = "güneşli"
+temperatur = 25
+
+if hava == "güneşli":
+    if temperatur > 20:
+        print("Dışarıya çık ve oyna!")
+    else:
+        print("Dışarıya çık ama ceket giy!")
+else:
+    print("Evde kal!")</code></pre>
+                    <button onclick="copyCode('python-code')" class="copy-btn">📋 Kodu Kopyala</button>
+                </div>
+            </section>
+        </article>
+    </main>
+    <script src="../js/script.js"></script>
+</body>
+</html>

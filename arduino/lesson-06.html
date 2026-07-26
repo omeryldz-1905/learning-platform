@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ders 6: Buzzer ile Ses - Arduino</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/lesson.css">
+</head>
+<body>
+    <main class="container lesson-container">
+        <article class="lesson-content">
+            <header class="lesson-header">
+                <h1>Ders 6: Buzzer ile Ses Çıkart</h1>
+                <span class="level">Kolay</span>
+                <p class="lesson-intro">Buzzer (ses üreticisi) kullanarak çeşitli ses ve müzik notaları oluşturacağız.</p>
+            </header>
+            <section class="lesson-section">
+                <h2>📚 Öğrenecekleriniz</h2>
+                <ul>
+                    <li>Buzzer'ın çalışma prensibi</li>
+                    <li>tone() fonksiyonu ile frekans kontrolü</li>
+                    <li>Müzik notalarının frekansları</li>
+                    <li>Melodi oluşturma</li>
+                    <li>Passive ve Active buzzer farkı</li>
+                </ul>
+            </section>
+            <section class="lesson-section">
+                <h2>🔌 Devre Şeması</h2>
+                <div class="circuit-diagram">
+                    <pre>
+Arduino Pin 8 ---[Buzzer]---GND
+
+NOT: Buzzer kutuplarına dikkat et!
+(+ ve - ayırımı var)
+                    </pre>
+                </div>
+            </section>
+            <section class="lesson-section">
+                <h2>💻 Arduino Kodu</h2>
+                <div class="code-block">
+                    <pre><code id="arduino-code">// Buzzer ile Ses Çıkartma - Ders 6
+
+int buzzerPin = 8;  // Buzzer PIN
+
+// Müzik notalarının frekansları (Hz)
+int DO = 262;      // C4
+int RE = 294;      // D4
+int MI = 330;      // E4
+int FA = 349;      // F4
+int SOL = 392;     // G4
+int LA = 440;      // A4
+int SI = 494;      // B4
+
+void setup() {
+  pinMode(buzzerPin, OUTPUT);
+}
+
+void loop() {
+  // Müzik notalarını çal
+  tone(buzzerPin, DO, 500);    // DO - 500ms
+  delay(600);
+  
+  tone(buzzerPin, RE, 500);    // RE
+  delay(600);
+  
+  tone(buzzerPin, MI, 500);    // MI
+  delay(600);
+  
+  tone(buzzerPin, FA, 500);    // FA
+  delay(600);
+  
+  tone(buzzerPin, SOL, 500);   // SOL
+  delay(1000);
+  
+  noTone(buzzerPin);           // Sesi kapat
+  delay(2000);
+}</code></pre>
+                    <button onclick="copyCode('arduino-code')" class="copy-btn">📋 Kodu Kopyala</button>
+                </div>
+            </section>
+            <section class="lesson-section">
+                <h2>🎵 Müzik Notaları Frekansları</h2>
+                <div class="explanation">
+                    <div class="exp-item">
+                        <h3>tone(pin, frekans, süre)</h3>
+                        <p>Belirtilen pin'den belirtilen frekansda ses üretir. Süre milisaniye cinsinden.</p>
+                    </div>
+                    <div class="exp-item">
+                        <h3>noTone(pin)</h3>
+                        <p>Belirtilen pin'deki sesi kapatır.</p>
+                    </div>
+                </div>
+            </section>
+        </article>
+    </main>
+    <script src="../js/script.js"></script>
+</body>
+</html>

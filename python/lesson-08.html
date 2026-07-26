@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ders 8: Stringler - Python</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/lesson.css">
+</head>
+<body class="python-lesson">
+    <main class="container lesson-container">
+        <article class="lesson-content">
+            <header class="lesson-header" style="background: linear-gradient(135deg, #0f3460 0%, #16213e 100%);">
+                <h1>Ders 8: String'ler ve String Metodları</h1>
+                <span class="level level-easy">Kolay</span>
+                <p class="lesson-intro">Metinlerle çalışan güçlü metotları öğrenelim. upper(), lower(), replace(), split() ve daha fazlası!</p>
+            </header>
+            <section class="lesson-section">
+                <h2>📚 Öğrenecekleriniz</h2>
+                <ul>
+                    <li>String metodları</li>
+                    <li>upper() - Büyük harfe çevir</li>
+                    <li>lower() - Küçük harfe çevir</li>
+                    <li>replace() - Değiştir</li>
+                    <li>split() - Böl</li>
+                    <li>join() - Birleştir</li>
+                    <li>strip() - Boşluk kaldır</li>
+                    <li>find() - Bul</li>
+                    <li>count() - Saç</li>
+                </ul>
+            </section>
+            <section class="lesson-section">
+                <h2>💻 Örnekler</h2>
+                <div class="code-block">
+                    <pre><code id="python-code"># String Metodları
+
+metin = "Merhaba Dünya!"
+
+# upper() - Büyük harfe çevir
+print(metin.upper())  # MERHABA DÜNYA!
+
+# lower() - Küçük harfe çevir
+print(metin.lower())  # merhaba dünya!
+
+# len() - Uzunluk
+print(len(metin))  # 14
+
+# replace() - Değiştir
+print(metin.replace("Dünya", "Python"))  # Merhaba Python!
+
+# split() - Böl
+sozler = metin.split()  # ['Merhaba', 'Dünya!']
+print(sozler)
+
+# join() - Birleştir
+sonuc = "-".join(sozler)  # Merhaba-Dünya!
+print(sonuc)
+
+# strip() - Boşluk kaldır
+metin2 = "  Merhaba  "
+print(repr(metin2.strip()))  # 'Merhaba'
+
+# find() - Bul
+indeks = metin.find("Dünya")
+print(indeks)  # 8
+
+# count() - Sayı
+print(metin.count("a"))  # 2
+
+# startswith() / endswith()
+print(metin.startswith("Merhaba"))  # True
+print(metin.endswith("!"))  # True</code></pre>
+                    <button onclick="copyCode('python-code')" class="copy-btn">📋 Kodu Kopyala</button>
+                </div>
+            </section>
+        </article>
+    </main>
+    <script src="../js/script.js"></script>
+</body>
+</html>

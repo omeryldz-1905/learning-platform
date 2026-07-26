@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ders 7: LDR Işık Sensörü - Arduino</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/lesson.css">
+</head>
+<body>
+    <main class="container lesson-container">
+        <article class="lesson-content">
+            <header class="lesson-header">
+                <h1>Ders 7: LDR (Işık Sensörü)</h1>
+                <span class="level">Orta</span>
+                <p class="lesson-intro">LDR (Light Dependent Resistor) kullanarak ortam ışığını algıla ve LED'i kontrol et.</p>
+            </header>
+            <section class="lesson-section">
+                <h2>📚 Öğrenecekleriniz</h2>
+                <ul>
+                    <li>LDR (fotoresistor) nedir</li>
+                    <li>Işık şiddeti ölçümü</li>
+                    <li>AnalogRead ile sensör verileri</li>
+                    <li>Eşik değeri (threshold) ayarlama</li>
+                    <li>Otomatik gece lambası yapımı</li>
+                </ul>
+            </section>
+            <section class="lesson-section">
+                <h2>💻 Arduino Kodu</h2>
+                <div class="code-block">
+                    <pre><code id="arduino-code">// LDR Işık Sensörü - Ders 7
+
+int ldrPin = A0;   // LDR - Analog Pin
+int ledPin = 9;    // LED - PWM Pin
+int lightValue = 0;
+int threshold = 300;  // Eşik değeri
+
+void setup() {
+  pinMode(ledPin, OUTPUT);
+  Serial.begin(9600);
+}
+
+void loop() {
+  // LDR'den değer oku (0-1023)
+  lightValue = analogRead(ldrPin);
+  
+  // Işık düşükse LED'i yak
+  if (lightValue < threshold) {
+    digitalWrite(ledPin, HIGH);  // LED açık
+  } else {
+    digitalWrite(ledPin, LOW);   // LED kapalı
+  }
+  
+  // Seri monitöre yazdır
+  Serial.print("Işık: ");
+  Serial.println(lightValue);
+  
+  delay(500);
+}</code></pre>
+                    <button onclick="copyCode('arduino-code')" class="copy-btn">📋 Kodu Kopyala</button>
+                </div>
+            </section>
+        </article>
+    </main>
+    <script src="../js/script.js"></script>
+</body>
+</html>

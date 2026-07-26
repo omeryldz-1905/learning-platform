@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ders 4: Operatörler - Python</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/lesson.css">
+</head>
+<body class="python-lesson">
+    <main class="container lesson-container">
+        <article class="lesson-content">
+            <header class="lesson-header" style="background: linear-gradient(135deg, #0f3460 0%, #16213e 100%);">
+                <h1>Ders 4: Matematiksel Operatörler</h1>
+                <span class="level level-easy">Kolay</span>
+                <p class="lesson-intro">Python'da matematik işlemleri yapabiliriz. Toplama, çıkarma, çarpma, bölme ve daha fazlası!</p>
+            </header>
+            <section class="lesson-section">
+                <h2>📚 Öğrenecekleriniz</h2>
+                <ul>
+                    <li>Toplama (+)</li>
+                    <li>Çıkarma (-)</li>
+                    <li>Çarpma (*)</li>
+                    <li>Bölme (/)</li>
+                    <li>Tam bölme (//)</li>
+                    <li>Mod alma (%)</li>
+                    <li>Üs alma (**)</li>
+                </ul>
+            </section>
+            <section class="lesson-section">
+                <h2>💻 Örnekler</h2>
+                <div class="code-block">
+                    <pre><code id="python-code"># Matematiksel Operatörler
+
+# Toplama
+num1 = 10
+num2 = 5
+toplam = num1 + num2
+print(f"{num1} + {num2} = {toplam}")  # 15
+
+# Çıkarma
+fark = num1 - num2
+print(f"{num1} - {num2} = {fark}")    # 5
+
+# Çarpma
+çarpim = num1 * num2
+print(f"{num1} * {num2} = {çarpim}")  # 50
+
+# Bölme (Ondalık sonuç)
+bolum = num1 / num2
+print(f"{num1} / {num2} = {bolum}")   # 2.0
+
+# Tam bölme (Tamsayı sonucu)
+tam_bolum = num1 // num2
+print(f"{num1} // {num2} = {tam_bolum}")  # 2
+
+# Mod (Kalan)
+kalan = num1 % num2
+print(f"{num1} % {num2} = {kalan}")   # 0
+
+# Üs alma
+kare = 5 ** 2
+kup = 5 ** 3
+print(f"5 ** 2 = {kare}")  # 25
+print(f"5 ** 3 = {kup}")    # 125
+
+# Sıralama (Öncelik)
+sonuc = 2 + 3 * 4
+print(f"2 + 3 * 4 = {sonuc}")  # 14 (çarpma önce)
+
+# Parantez kullanımı
+sonuc2 = (2 + 3) * 4
+print(f"(2 + 3) * 4 = {sonuc2}")  # 20</code></pre>
+                    <button onclick="copyCode('python-code')" class="copy-btn">📋 Kodu Kopyala</button>
+                </div>
+            </section>
+            <section class="lesson-section">
+                <h2>🔍 Detaylı Açıklama</h2>
+                <div class="explanation">
+                    <div class="exp-item">
+                        <h3>Bölme (/) vs Tam Bölme (//)</h3>
+                        <p>10 / 3 = 3.333... (ondalık) | 10 // 3 = 3 (tamsayı)</p>
+                    </div>
+                    <div class="exp-item">
+                        <h3>Mod (%)</h3>
+                        <p>Bölme işleminin kalanını verir. 10 % 3 = 1</p>
+                    </div>
+                    <div class="exp-item">
+                        <h3>Üs (**)  </h3>
+                        <p>2 ** 3 = 2 * 2 * 2 = 8</p>
+                    </div>
+                    <div class="exp-item">
+                        <h3>İşlem Sırası</h3>
+                        <p>1. Parantez () 2. Üs ** 3. *, /, //, % 4. +, -</p>
+                    </div>
+                </div>
+            </section>
+        </article>
+    </main>
+    <script src="../js/script.js"></script>
+</body>
+</html>

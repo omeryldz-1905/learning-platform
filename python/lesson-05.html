@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ders 5: Karşılaştırma Operatörleri - Python</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/lesson.css">
+</head>
+<body class="python-lesson">
+    <main class="container lesson-container">
+        <article class="lesson-content">
+            <header class="lesson-header" style="background: linear-gradient(135deg, #0f3460 0%, #16213e 100%);">
+                <h1>Ders 5: Karşılaştırma Operatörleri</h1>
+                <span class="level level-easy">Kolay</span>
+                <p class="lesson-intro">Değerleri karşılaştırarak True veya False sonucu elde ederiz.</p>
+            </header>
+            <section class="lesson-section">
+                <h2>📚 Öğrenecekleriniz</h2>
+                <ul>
+                    <li>Eşittir (==)</li>
+                    <li>Eşit değildir (!=)</li>
+                    <li>Büyüktür (>)</li>
+                    <li>Küçüktür (<)</li>
+                    <li>Büyük veya eşit (>=)</li>
+                    <li>Küçük veya eşit (<=)</li>
+                </ul>
+            </section>
+            <section class="lesson-section">
+                <h2>💻 Örnekler</h2>
+                <div class="code-block">
+                    <pre><code id="python-code"># Karşılaştırma Operatörleri
+
+a = 10
+b = 5
+
+# Eşittir (==)
+print(a == b)    # False
+print(a == 10)   # True
+
+# Eşit değildir (!=)
+print(a != b)    # True
+print(a != 10)   # False
+
+# Büyüktür (>)
+print(a > b)     # True (10 > 5)
+print(5 > 10)    # False
+
+# Küçüktür (<)
+print(a < b)     # False (10 < 5 değil)
+print(5 < 10)    # True
+
+# Büyük veya eşit (>=)
+print(a >= 10)   # True
+print(a >= 11)   # False
+
+# Küçük veya eşit (<=)
+print(b <= 5)    # True
+print(b <= 4)    # False</code></pre>
+                    <button onclick="copyCode('python-code')" class="copy-btn">📋 Kodu Kopyala</button>
+                </div>
+            </section>
+        </article>
+    </main>
+    <script src="../js/script.js"></script>
+</body>
+</html>
